@@ -21,4 +21,16 @@ router.get("/:fileName", async (req, res) => {
     }
 });
 
+router.get("/count", async (req, res) => {
+    try {
+        const files = await File.aggregate([
+            {$match: {}},
+            {$group: {_id: {$substr: ["$lastModified", 0, 9]}, count: {$sum: 1}}}
+        ]);
+        res.json(files);
+    } catch(err) {
+        res.json({message: err.message});
+    }
+})
+
 module.exports = router;
