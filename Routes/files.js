@@ -5,32 +5,59 @@ const File = require("../Models/file");
 //Get all files
 router.get("/", async (req, res) => {
     try {
-        const files = await File.find();
+        const files = await File.find().sort([['lastModified', -1]]);
         res.json(files);
     } catch (err) {
         res.status(500).json({message: err.message});
     }
 });
 
-router.get("/:fileName", async (req, res) => {
+router.get("/byDate", async (req, res) => {
     try {
-        const files = await File.find({fileName: req.params.fileName});
+        const files = await File.aggregate([{ "$group":         {
+            _id: {
+                $dateToString: {
+                    date: {$dateFromString: {dateString: '$lastModified'}},
+                    "format": "%Y-%m-%d"
+                }
+            }, 
+            count: { $sum:1 }
+        }}, {"$sort": {_id: -1 }}]);
         res.json(files);
     } catch (err) {
-        res.json({message: err.message});
+        res.status(500).json({message: err.message});
     }
 });
 
-router.get("/count", async (req, res) => {
+// router.get("/search/:fileName", async (req, res) => {
+//     try {
+//         const files = await File.find({fileName: req.params.fileName});
+//         res.json(files);
+//     } catch (err) {
+//         res.json({message: err.message});
+//     }
+// });
+
+router.get("/search", async (req, res) => {
     try {
-        const files = await File.aggregate([
-            {$match: {}},
-            {$group: {_id: {$substr: ["$lastModified", 0, 9]}, count: {$sum: 1}}}
-        ]);
+        const files = await File.find(req.query);
         res.json(files);
     } catch(err) {
         res.json({message: err.message});
     }
-})
+});
+
+// router.get("/search", async (req, res) => {
+//     try {
+//         const files = await File.find({$text: {$search: req.query.fileName}});
+//         res.render("files", { files });
+//         console.log("here");
+//         res.json(files);
+//     } catch (err) {
+//         console.log(err.message);
+//         res.json({message: err.message});
+//     }
+// });
+
 
 module.exports = router;
