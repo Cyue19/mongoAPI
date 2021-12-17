@@ -12,15 +12,6 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/last", async (req, res) => {
-    try {
-        const files = await File.findOne({}, null, {sort : { lastModified: -1 }});
-        res.json(files);
-    } catch (err) {
-        res.status(500).json({message: err.message});
-    }
-});
-
 router.get("/byDate", async (req, res) => {
     try {
         const files = await File.aggregate([{ "$group":         {
@@ -38,14 +29,35 @@ router.get("/byDate", async (req, res) => {
     }
 });
 
-router.get("/search/:fileName", async (req, res) => {
+// router.get("/search/:fileName", async (req, res) => {
+//     try {
+//         const files = await File.find({fileName: req.params.fileName});
+//         res.json(files);
+//     } catch (err) {
+//         res.json({message: err.message});
+//     }
+// });
+
+router.get("/search", async (req, res) => {
     try {
-        const files = await File.find({fileName: req.params.fileName});
+        const files = await File.find(req.query);
         res.json(files);
-    } catch (err) {
+    } catch(err) {
         res.json({message: err.message});
     }
 });
+
+// router.get("/search", async (req, res) => {
+//     try {
+//         const files = await File.find({$text: {$search: req.query.fileName}});
+//         res.render("files", { files });
+//         console.log("here");
+//         res.json(files);
+//     } catch (err) {
+//         console.log(err.message);
+//         res.json({message: err.message});
+//     }
+// });
 
 
 module.exports = router;
