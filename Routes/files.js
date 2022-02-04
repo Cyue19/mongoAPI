@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 
 router.get("/byDate", async (req, res) => {
     try {
-        const files = await File.aggregate([{ "$group":         {
+        const files = await File.aggregate([{ "$group": {
             _id: {
                 $dateToString: {
                     date: {$dateFromString: {dateString: '$lastModified'}},
