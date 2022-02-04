@@ -29,6 +29,7 @@ router.get("/byDate", async (req, res) => {
     }
 });
 
+//search by fileName
 // router.get("/search/:fileName", async (req, res) => {
 //     try {
 //         const files = await File.find({fileName: req.params.fileName});
@@ -38,6 +39,7 @@ router.get("/byDate", async (req, res) => {
 //     }
 // });
 
+//search for files
 router.get("/search", async (req, res) => {
     try {
         const files = await File.find(req.query);
@@ -46,18 +48,6 @@ router.get("/search", async (req, res) => {
         res.json({message: err.message});
     }
 });
-
-// router.get("/search", async (req, res) => {
-//     try {
-//         const files = await File.find({$text: {$search: req.query.fileName}});
-//         res.render("files", { files });
-//         console.log("here");
-//         res.json(files);
-//     } catch (err) {
-//         console.log(err.message);
-//         res.json({message: err.message});
-//     }
-// });
 
 
 module.exports = router;
