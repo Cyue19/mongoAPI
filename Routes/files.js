@@ -42,11 +42,7 @@ router.get("/byDate", async (req, res) => {
 //search for files
 router.get("/search", async (req, res) => {
     try {
-        //fuzzy search
-        const key = Object.keys(req.query);
-        const val = Object.values(req.query);
-
-        const files = await File.find({[key]: val});
+        const files = await File.find(req.query);
         res.json(files);
     } catch(err) {
         res.json({message: err.message});
