@@ -17,4 +17,8 @@ app.use(cors());
 const filesRouter = require("./Routes/files");
 app.use("/files", filesRouter);
 
+const painRouter = require("./Routes/pain");
+app.use("/pain", painRouter);
+
+
 app.listen(3001, ()=>console.log("Server started"));

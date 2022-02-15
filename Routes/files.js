@@ -12,6 +12,16 @@ router.get("/", async (req, res) => {
     }
 });
 
+//Get last file
+router.get("/last", async (req, res) => {
+    try {
+        const files = await File.find().sort([['lastModified', -1]]);
+        res.json(files[0]);
+    } catch (err) {
+        res.status(500).json({message: err.message});
+    }
+});
+
 router.get("/byDate", async (req, res) => {
     try {
         const files = await File.aggregate([{ "$group":         {
