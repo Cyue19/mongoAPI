@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const mysql = require("mysql");
 
 //app.set("view engine", "ejs");
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
@@ -15,10 +16,8 @@ app.use(express.json());
 app.use(cors());
 
 const filesRouter = require("./Routes/files");
+const responseRouter = require("./Routes/responses");
 app.use("/files", filesRouter);
-
-const painRouter = require("./Routes/pain");
-app.use("/pain", painRouter);
-
+app.use("/responses", responseRouter);
 
 app.listen(3001, ()=>console.log("Server started"));
