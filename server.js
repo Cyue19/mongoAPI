@@ -20,8 +20,4 @@ const responseRouter = require("./Routes/responses");
 app.use("/files", filesRouter);
 app.use("/responses", responseRouter);
 
-const painRouter = require("./Routes/pain");
-app.use("/pain", painRouter);
-
-
 app.listen(3001, ()=>console.log("Server started"));
