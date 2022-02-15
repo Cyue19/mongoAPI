@@ -32,9 +32,8 @@ mysql_db.getPainResponses = () => {
                 return resolve (results);
             }
         })
+        connection.end();
     })
 };
-
-connection.release();
 
 module.exports = mysql_db;
