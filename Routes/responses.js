@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../Databases/response");
 
-//Get all files
+//Get all pain files 
 router.get("/pain", async (req, res) => {
     try {
         const responses = await db.getPainResponses();
