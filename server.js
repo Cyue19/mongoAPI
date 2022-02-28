@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const mysql = require("mysql");
 
-//app.set("view engine", "ejs");
+//connect to mongodb
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", (err) => console.log(err));

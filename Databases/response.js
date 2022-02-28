@@ -32,6 +32,34 @@ mysql_db.getPainResponses = () => {
                 return resolve (results);
             }
         })
+        // connection.end();
+    })
+};
+
+//get all end of day responses data from besi-c
+mysql_db.getEndOfDayResponses = () => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM End_Of_Day_Responses", (err, results) => {
+            if (err) {
+                return reject(err);
+            } else {
+                return resolve (results);
+            }
+        })
+        connection.end();
+    })
+};
+
+//get all follow up data from besi-c
+mysql_db.getFollowUpResponses = () => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Follow_Up_Responses", (err, results) => {
+            if (err) {
+                return reject(err);
+            } else {
+                return resolve (results);
+            }
+        })
         connection.end();
     })
 };
