@@ -64,4 +64,47 @@ mysql_db.getFollowUpResponses = () => {
     })
 };
 
+
+//get the last follow up data from besi-c
+mysql_db.getFollowUpRecent = () => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Follow_Up_Responses ORDER BY Follow_Up_Responses.time DESC", (err, results) => {
+            if (err) {
+                return reject(err);
+            } else {
+                return resolve (results);
+            }
+        })
+        connection.end();
+    })
+};
+
+//get the last follow up data from besi-c
+mysql_db.getEndOfDayRecent = () => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM End_Of_Day_Responses ORDER BY End_Of_Day_Responses.time DESC", (err, results) => {
+            if (err) {
+                return reject(err);
+            } else {
+                return resolve (results);
+            }
+        })
+        connection.end();
+    })
+};
+
+//get the last follow up data from besi-c
+mysql_db.getFollowUpQ1 = () => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT question1 FROM End_Of_Day_Responses", (err, results) => {
+            if (err) {
+                return reject(err);
+            } else {
+                return resolve (results);
+            }
+        })
+        connection.end();
+    })
+};
+
 module.exports = mysql_db;
