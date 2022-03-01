@@ -46,7 +46,7 @@ mysql_db.getEndOfDayResponses = () => {
                 return resolve (results);
             }
         })
-        connection.end();
+        //connection.end();
     })
 };
 
@@ -60,7 +60,7 @@ mysql_db.getFollowUpResponses = () => {
                 return resolve (results);
             }
         })
-        connection.end();
+        //connection.end();
     })
 };
 
@@ -75,7 +75,7 @@ mysql_db.getFollowUpRecent = () => {
                 return resolve (results);
             }
         })
-        connection.end();
+        //connection.end();
     })
 };
 
@@ -89,7 +89,7 @@ mysql_db.getEndOfDayRecent = () => {
                 return resolve (results);
             }
         })
-        connection.end();
+        //connection.end();
     })
 };
 
@@ -103,7 +103,7 @@ mysql_db.getFollowUpQ1 = () => {
                 return resolve (results);
             }
         })
-        connection.end();
+        //connection.end();
     })
 };
 
