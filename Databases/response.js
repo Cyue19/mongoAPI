@@ -97,7 +97,7 @@ mysql_db.getEndOfDayRecent = () => {
 mysql_db.getFollowUpQ1 = () => {
     return new Promise((resolve, reject) => {
         //below query counts the distinct values in question1 
-        connection.query("SELECT question1, count(*) FROM `Besi-C`.Follow_Up_Responses Group by question1;", (err, results) => {
+        connection.query("SELECT question1, count(*) as count FROM `Besi-C`.Follow_Up_Responses Group by question1;", (err, results) => {
             if (err) {
                 return reject(err);
             } else {
@@ -111,7 +111,7 @@ mysql_db.getFollowUpQ1 = () => {
 //get question1 from end-of-day data from besi-c
 mysql_db.getEndOfDayQ1 = () => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT question1, count(*) FROM `Besi-C`.End_Of_Day_Responses GROUP BY question1", (err, results) => {
+        connection.query("SELECT question1, count(*) as count FROM `Besi-C`.End_Of_Day_Responses GROUP BY question1", (err, results) => {
             if (err) {
                 return reject(err);
             } else {
