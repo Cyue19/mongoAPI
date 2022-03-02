@@ -45,7 +45,7 @@ router.get("/follow_up/last", async (req, res) => {
     }
 });
 
-//Get last follow_up Q1 files
+//Get the counts for all follow_up question1 responses 
 router.get("/follow_up/q1", async (req, res) => {
     try {
         const files = await db.getFollowUpQ1();
@@ -65,5 +65,14 @@ router.get("/end_of_day/last", async (req, res) => {
     }
 });
 
+//Get the counts for all follow_up question1 responses 
+router.get("/end_of_day/q1", async (req, res) => {
+    try {
+        const files = await db.getEndOfDayQ1();
+        res.json(files);
+    } catch (err) {
+        res.status(500).json({message: err.message});
+    }
+});
 
 module.exports = router;
