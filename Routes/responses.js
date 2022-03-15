@@ -13,6 +13,27 @@ router.get("/pain", async (req, res) => {
     }
 });
 
+//Get last pain response
+router.get("/pain/last", async (req, res) => {
+    try {
+        const responses = await db.getPainResponses();
+        res.json(responses[0]);
+    } catch (err) {
+        console.log(err);
+        res.status.json({message: err.message});
+    }
+})
+
+//Get the counts for pain response questionOneAnswer
+router.get("/pain/counts", async (req, res) => {
+    try {
+        const files = await db.getPainCounts();
+        res.json(files);
+    } catch (err) {
+        res.status(500).json({message: err.message});
+    }
+});
+
 //Get all end of day responses 
 router.get("/end_of_day", async (req, res) => {
     try {

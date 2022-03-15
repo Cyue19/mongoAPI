@@ -25,14 +25,29 @@ let mysql_db = {};
 //get all pain response data from besi-c
 mysql_db.getPainResponses = () => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM Pain_Responses", (err, results) => {
+        connection.query("SELECT * FROM Pain_Responses ORDER BY time DESC", (err, results) => {
             if (err) {
                 return reject(err);
             } else {
                 return resolve (results);
             }
         })
-        // connection.end();
+        //connection.end();
+    })
+};
+
+//get question1 from follow up data from besi-c
+mysql_db.getPainCounts = () => {
+    return new Promise((resolve, reject) => {
+        //below query counts the distinct values in question1 
+        connection.query("SELECT questionOneAnswer, count(*) as count FROM Pain_Responses GROUP BY questionOneAnswer;", (err, results) => {
+            if (err) {
+                return reject(err);
+            } else {
+                return resolve (results);
+            }
+        })
+        //connection.end();
     })
 };
 
