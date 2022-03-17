@@ -22,10 +22,23 @@ connection.connect((err) => {
 
 let mysql_db = {};
 
-//get all pain response data from besi-c
-mysql_db.getPainResponses = () => {
+//get deployment numbers
+mysql_db.getDeployments = () => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM Pain_Responses ORDER BY time DESC", (err, results) => {
+        connection.query("SELECT DISTINCT painResponseDeployment FROM Pain_Responses", (err, results) => {
+            if (err) {
+                return reject(err);
+            } else {
+                return resolve(results);
+            }
+        })
+    })
+}
+
+//get all pain response data from a specific deployment
+mysql_db.getPainResponses = (deployment) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Pain_Responses WHERE painResponseDeployment = ? ORDER BY time DESC", [deployment], (err, results) => {
             if (err) {
                 return reject(err);
             } else {
@@ -36,11 +49,11 @@ mysql_db.getPainResponses = () => {
     })
 };
 
-//get question1 from follow up data from besi-c
-mysql_db.getPainCounts = () => {
+//get question1 pain answer counts from a specific deployment
+mysql_db.getPainCounts = (deployment) => {
     return new Promise((resolve, reject) => {
         //below query counts the distinct values in question1 
-        connection.query("SELECT questionOneAnswer, count(*) as count FROM Pain_Responses GROUP BY questionOneAnswer;", (err, results) => {
+        connection.query("SELECT questionOneAnswer, count(*) AS count FROM Pain_Responses WHERE painResponseDeployment = ? GROUP BY questionOneAnswer;", [deployment], (err, results) => {
             if (err) {
                 return reject(err);
             } else {
