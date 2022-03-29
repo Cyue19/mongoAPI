@@ -64,10 +64,10 @@ mysql_db.getPainCounts = (deployment) => {
     })
 };
 
-//get all end of day responses data from besi-c
-mysql_db.getEndOfDayResponses = () => {
+//get all end of day responses data from besi-c deployment
+mysql_db.getEndOfDayResponses = (deployment) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM End_Of_Day_Responses", (err, results) => {
+        connection.query("SELECT * FROM End_Of_Day_Responses WHERE eodrDeployment = ?", [deployment], (err, results) => {
             if (err) {
                 return reject(err);
             } else {
@@ -78,10 +78,10 @@ mysql_db.getEndOfDayResponses = () => {
     })
 };
 
-//get all follow up data from besi-c
-mysql_db.getFollowUpResponses = () => {
+//get all follow up data from besi-c deployment
+mysql_db.getFollowUpResponses = (deployment) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM Follow_Up_Responses", (err, results) => {
+        connection.query("SELECT * FROM Follow_Up_Responses WHERE furDeployment = ?", [deployment], (err, results) => {
             if (err) {
                 return reject(err);
             } else {
@@ -93,10 +93,10 @@ mysql_db.getFollowUpResponses = () => {
 };
 
 
-//get the last follow up data from besi-c
-mysql_db.getFollowUpRecent = () => {
+//get the last follow up data from besi-c deployment
+mysql_db.getFollowUpRecent = (deployment) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM Follow_Up_Responses ORDER BY Follow_Up_Responses.time DESC", (err, results) => {
+        connection.query("SELECT * FROM Follow_Up_Responses WHERE furDeployment = ? ORDER BY Follow_Up_Responses.time DESC", [deployment], (err, results) => {
             if (err) {
                 return reject(err);
             } else {
@@ -107,10 +107,10 @@ mysql_db.getFollowUpRecent = () => {
     })
 };
 
-//get the last follow up data from besi-c
-mysql_db.getEndOfDayRecent = () => {
+//get the last follow up data from besi-c deployment
+mysql_db.getEndOfDayRecent = (deployment) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM End_Of_Day_Responses ORDER BY End_Of_Day_Responses.time DESC", (err, results) => {
+        connection.query("SELECT * FROM End_Of_Day_Responses WHERE eodrDeployment = ? ORDER BY End_Of_Day_Responses.time DESC", [deployment], (err, results) => {
             if (err) {
                 return reject(err);
             } else {
@@ -121,11 +121,11 @@ mysql_db.getEndOfDayRecent = () => {
     })
 };
 
-//get question1 from follow up data from besi-c
-mysql_db.getFollowUpQ1 = () => {
+//get question1 from follow up data from besi-c deployment
+mysql_db.getFollowUpQ1 = (deployment) => {
     return new Promise((resolve, reject) => {
         //below query counts the distinct values in question1 
-        connection.query("SELECT question1, count(*) as count FROM `Besi-C`.Follow_Up_Responses Group by question1;", (err, results) => {
+        connection.query("SELECT question1, count(*) as count FROM `Besi-C`.Follow_Up_Responses WHERE furDeployment = ? GROUP BY question1;", [deployment], (err, results) => {
             if (err) {
                 return reject(err);
             } else {
@@ -136,10 +136,10 @@ mysql_db.getFollowUpQ1 = () => {
     })
 };
 
-//get question1 from end-of-day data from besi-c
-mysql_db.getEndOfDayQ1 = () => {
+//get question1 from end-of-day data from besi-c deployment
+mysql_db.getEndOfDayQ1 = (deployment) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT question1, count(*) as count FROM `Besi-C`.End_Of_Day_Responses GROUP BY question1", (err, results) => {
+        connection.query("SELECT question1, count(*) as count FROM `Besi-C`.End_Of_Day_Responses WHERE eodrDeployment = ? GROUP BY question1", [deployment], (err, results) => {
             if (err) {
                 return reject(err);
             } else {
